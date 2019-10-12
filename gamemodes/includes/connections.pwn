@@ -1,0 +1,44 @@
+/*
+					  /$$$$$$   /$$$$$$  /$$$$$$$  /$$      /$$
+					 /$$__  $$ /$$__  $$| $$__  $$| $$$    /$$$
+					| $$  \ $$| $$  \__/| $$  \ $$| $$$$  /$$$$
+					| $$  | $$|  $$$$$$ | $$  | $$| $$ $$/$$ $$
+					| $$  | $$ \____  $$| $$  | $$| $$  $$$| $$
+					| $$  | $$ /$$  \ $$| $$  | $$| $$\  $ | $$
+					|  $$$$$$/|  $$$$$$/| $$$$$$$/| $$ \/  | $$
+					 \______/  \______/ |_______/ |__/     |__/ 
+
+//-------------------------[CONNECTIONS.PWN]--------------------------------
+
+
+ * Copyright (c) 2019, Old School Deathmatch
+ *
+ * All rights reserved.
+ *
+ * Redistribution and use in source and binary forms, with or without modification,
+ * are not permitted in any case.
+ *
+ *
+ * THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
+ * "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
+ * LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
+ * A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR
+ * CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL,
+ * EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO,
+ * PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+ * PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF
+ * LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING
+ * NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+ * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+*/
+
+//================ MYSQL CONNECTION VARIABLES =========
+new
+    MySQL: Database, Corrupt_Check[MAX_PLAYERS];
+
+#define SQL_HOSTNAME "localhost"
+#define SQL_USERNAME "pmauser"
+#define SQL_DATABASE "queerdm"
+#define SQL_PASSWORD "36YUw5Qz3stl"
+
+//=====================================================
