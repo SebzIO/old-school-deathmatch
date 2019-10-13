@@ -50,6 +50,7 @@
 #define COLOR_HISPANICS 0x00FFFFFF
 #define COLOR_CRENSHAW 0x804040FF
 #define COLOR_PIZZABOYS 0xFFFF00FF
+#define COLOR_SHERIFF 0x20B2AAAA
 
 //=====================================================
 
@@ -83,4 +84,5 @@
 #define TEAM_HISPANICS 5
 #define TEAM_CRENSHAW 6
 #define TEAM_PIZZABOYS 7
+#define TEAM_SHERIFF 8
 //

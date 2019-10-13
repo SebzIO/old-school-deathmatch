@@ -119,6 +119,7 @@ GetTeamColor(playerid)
         case 5: {color = COLOR_HISPANICS;}
         case 6: {color = COLOR_CRENSHAW;}
         case 7: {color = COLOR_PIZZABOYS;}
+        case 8: {color = COLOR_SHERIFF;}
     }
 
     return color;

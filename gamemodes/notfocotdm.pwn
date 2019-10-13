@@ -55,6 +55,7 @@
 #include "./includes/discord.pwn"
 #include "./includes/enums.pwn"
 #include "./includes/functions.pwn"
+#include "./includes/mapping.pwn"
 #include "./includes/variables.pwn"
 
 #undef MAX_PLAYERS
@@ -135,6 +136,7 @@ public OnGameModeInit()
 	AddPlayerClass(116,1882.6505,-2018.1281,13.3906,179.5933,0,0,0,0,0,0); // TEAM_HISPANICS
 	AddPlayerClass(21,2140.4761,-1454.5516,24.1212,89.9411,0,0,0,0,0,0); // TEAM_CRENSHAW
 	AddPlayerClass(155,2100.2622,-1806.5969,13.5547,86.5500,0,0,0,0,0,0); // TEAM_PIZZABOYS
+	AddPlayerClass(311,1829.7382,-1414.5942,13.6016,1.2951,0,0,0,0,0,0); // TEAM_SHERIFF
 	// =====================
 
 	// Streamer GangZones
@@ -145,14 +147,6 @@ public OnGameModeInit()
 
 public OnGameModeExit()
 {
-	foreach(new i: Player)
-    {
-		if(IsPlayerConnected(i))
-		{
-			OnPlayerDisconnect(i, 1); // Save player data if/when gamemode exits.
-		}
-	}
-
 	mysql_close(Database);
 	return 1;
 }
@@ -207,7 +201,7 @@ public OnPlayerRequestClass(playerid, classid)
 
 	    case 4:
 	    {
-	        GameTextForPlayer(playerid,"~w~Strippers",3000,5);
+	        GameTextForPlayer(playerid,"~w~The Valentines",3000,5);
 	        gTeam[playerid] = TEAM_STRIPPERS;
 	    	SetPlayerPos(playerid, 2421.5190, -1220.7302, 25.4656);
 			SetPlayerCameraPos(playerid, 2421.3115, -1225.4768, 25.1294);
@@ -247,6 +241,17 @@ public OnPlayerRequestClass(playerid, classid)
 			SetPlayerCameraLookAt(playerid, 2100.2622, -1806.5969, 13.5547);
 	        SetPlayerTeam(playerid, TEAM_PIZZABOYS);
 	        SetPlayerColor(playerid, COLOR_PIZZABOYS);
+	    }
+
+	    case 8:
+	    {
+	        GameTextForPlayer(playerid,"~w~Los Santos Sheriff's Department",3000,5);
+	        gTeam[playerid] = TEAM_SHERIFF;
+	    	SetPlayerPos(playerid, 1829.7382, -1414.5942, 13.6016);
+			SetPlayerCameraPos(playerid, 1829.3568,-1406.6129,13.6016);
+			SetPlayerCameraLookAt(playerid, 1829.7382, -1414.5942, 13.6016);
+	        SetPlayerTeam(playerid, TEAM_SHERIFF);
+	        SetPlayerColor(playerid, COLOR_SHERIFF);
 	    }
 	}
 	return 1;
@@ -297,7 +302,7 @@ public OnPlayerConnect(playerid)
         format(banstring, sizeof(banstring), "Name: %s | IP: %s | Admin: %s | Reason: %s", bName, bIP, bAdmin, bReason);
         SendClientMessage(playerid, COLOR_MAJOR_WARNING, banstring);
         ShowPlayerDialog(playerid, DIALOG_BANNED, DIALOG_STYLE_MSGBOX, "You are banned from Old School Deathmatch", banstring, "Appeal On", "The Forums");
-        KickDelay(playerid, "You are banned from Old School Deathmatch. Appeal on the forums @ forums.osdm.xyz");
+        KickDelay(playerid, "You are banned from Old School Deathmatch. Appeal on the forums @ forum.osdm.xyz");
     }
 
     // Join messages
@@ -310,22 +315,6 @@ public OnPlayerConnect(playerid)
 public OnPlayerDisconnect(playerid, reason)
 {
 	aDuty[playerid] = 0;
-
-	Corrupt_Check[playerid]++;
-
-	new DB_Query[500];
-
-	mysql_format(Database, DB_Query, sizeof(DB_Query), "UPDATE `PLAYERS` SET `SCORE` = %d, `CASH` = %d, `KILLS` = %d, `DEATHS` = %d, `ADMIN` = %d, `IP` = %d WHERE `ID` = %d LIMIT 1",
-	pInfo[playerid][Score], pInfo[playerid][Cash], pInfo[playerid][Kills], pInfo[playerid][Deaths], pInfo[playerid][ID], pInfo[playerid][Admin], pInfo[playerid][IP]);
-
-	mysql_tquery(Database, DB_Query);
-
-	if(cache_is_valid(pInfo[playerid][Player_Cache]))
-	{
-		cache_delete(pInfo[playerid][Player_Cache]);
-		pInfo[playerid][Player_Cache] = MYSQL_INVALID_CACHE;
-	}
-
 	pInfo[playerid][LoggedIn] = false;
 
     new disconnectname[MAX_PLAYER_NAME], string[39 + MAX_PLAYER_NAME];
@@ -370,7 +359,11 @@ public OnPlayerSpawn(playerid)
 	}	else if(playerskin == 155) {
 		gTeam[playerid] = TEAM_PIZZABOYS;
  		SetPlayerTeam(playerid, TEAM_PIZZABOYS);
-	}	else {
+	}	else if(playerskin == 311) {
+		gTeam[playerid] = TEAM_SHERIFF;
+ 		SetPlayerTeam(playerid, TEAM_SHERIFF);
+	}
+		else {
 		SendClientMessage(playerid, COLOR_COMMAND_ERROR, "ERROR: You are not a member of any team, /changeteam immediately!");
 	}
 	//===========
@@ -918,134 +911,3 @@ public OnPlayerSuspectedForAimbot(playerid, hitid, weaponid, warnings)
 }
 
 //
-
-//================= MAPPING AND VEHICLES ================= // CreateVehicle(vehicletype, Float:x, Float:y, Float:z, Float:rotation, color1, color2, respawn_delay, addsiren=0)
-stock SpawnMapping()
-{
-	//============================= Crenshaw Mapping/Vehicles ================================
-	CreateVehicle(400, 2133.1780, -1469.7430, 23.8316, 0.0000, 179, 179, 120); // Crenshaw gang
-	CreateVehicle(458, 2133.1843, -1460.5956, 23.9970, 0.0000, 179, 179, 120); // Crenshaw gang
-	CreateVehicle(479, 2133.1682, -1478.3824, 23.2891, 0.0000, 179, 179, 120); // Crenshaw gang
-	CreateVehicle(579, 2128.9045, -1446.4017, 24.0365, 180.0000, 179, 179, 120); // Crenshaw gang
-	CreateVehicle(566, 2129.0002, -1437.9952, 24.4330, 180.0000, 179, 179, 120); // Crenshaw gang
-	//=========================================================================================
-
-	//============================= LSPD HQ Mapping/Vehicles ================================
-	CreateVehicle(490, 1526.5490, -1644.8408, 6.0212, 180.0000, 0, 0, 120);
-	CreateVehicle(490, 1530.4589, -1644.8408, 6.0212, 180.0000, 0, 0, 120);
-	CreateVehicle(490, 1534.5389, -1644.8408, 6.0212, 180.0000, 0, 0, 120);
-	CreateVehicle(490, 1538.4489, -1644.8408, 6.0212, 180.0000, 0, 0, 120);
-	CreateVehicle(426, 1528.1772, -1684.1036, 5.5611, 270.0000, 0, 1, 120, 1);
-	CreateVehicle(426, 1528.1772, -1687.9976, 5.5611, 270.0000, 0, 1, 120, 1);
-	CreateVehicle(596, 1544.8545, -1651.0107, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.8545, -1654.7867, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.8545, -1658.9757, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.8545, -1662.9667, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.9456, -1667.7897, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.9456, -1671.9757, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.9456, -1675.9797, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.9456, -1680.2567, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(596, 1544.9456, -1684.2607, 5.6481, 90.0000, 0, 1, 120);
-	CreateVehicle(541, 1585.3888, -1671.7435, 5.5197, 270.0000, 0, 1, 120, 1);
-	CreateVehicle(415, 1585.2844, -1667.6128, 5.7012, 270.0000, 0, 1, 120, 1);
-	CreateVehicle(599, 1601.6288, -1683.9128, 6.0635, 90.0000, 0, 1, 120);
-	CreateVehicle(599, 1601.6288, -1687.7347, 6.0635, 90.0000, 0, 1, 120);
-	CreateVehicle(497, 1568.2406, -1695.4041, 28.5722, 87.1526, 0, 1, 120);
-	CreateVehicle(596, 1558.8632, -1710.1434, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1570.2662, -1710.1434, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1574.4292, -1710.1434, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1578.5922, -1710.1434, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1583.2982, -1710.1434, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1587.4612, -1710.1434, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1591.4232, -1710.1427, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(596, 1595.4052, -1710.1427, 5.6481, 0.0000, 0, 1, 120);
-	CreateVehicle(599, 1601.6288, -1691.8977, 6.0635, 90.0000, 0, 1, 120);
-	CreateVehicle(599, 1601.6288, -1696.0607, 6.0635, 90.0000, 0, 1, 120);
-	CreateVehicle(599, 1601.6288, -1700.2238, 6.0635, 90.0000, 0, 1, 120);
-	CreateVehicle(599, 1601.6288, -1704.3868, 6.0635, 90.0000, 0, 1, 120);
-	CreateVehicle(487, 1555.0923, -1609.1469, 13.5979, 180.0000, 0, 1, 120);
-	//=========================================================================================
-
-	//============================= Mafia Mapping/Vehicles ================================
-	CreateVehicle(580, 1631.5427, -1907.9242, 13.4493, 0.0000, 51, 51, 120);
-	CreateVehicle(580, 1635.1395, -1906.4312, 13.4493, 0.0000, 51, 51, 120);
-	CreateVehicle(580, 1638.6147, -1905.6790, 13.4493, 0.0000, 51, 51, 120);
-	CreateVehicle(580, 1645.6010, -1903.5651, 13.4493, 0.0000, 51, 51, 120);
-	CreateVehicle(580, 1642.1191, -1904.6340, 13.4493, 0.0000, 51, 51, 120);
-	CreateVehicle(521, 1648.8828, -1903.7393, 13.2675, 0.0000, 51, 51, 120);
-	CreateVehicle(521, 1650.5419, -1903.7823, 13.2675, 0.0000, 51, 51, 120);
-	CreateVehicle(579, 1669.3582, -1884.6866, 13.6242, 90.0000, 51, 51, 120);
-	CreateVehicle(579, 1669.3582, -1888.6686, 13.6242, 90.0000, 51, 51, 120);
-	CreateVehicle(609, 1669.0735, -1895.0786, 13.6302, 90.0000, 51, 51, 120);
-	CreateVehicle(487, 1678.8270, -1889.6235, 22.1046, 0.0000, 51, 51, 120);
-	//=========================================================================================
-
-	//============================= LSFD Mapping/Vehicles ================================
-    CreateVehicle(416, 1180.6284, -1339.0195, 14.0455, 270.0000, 1, 161, 120);
-	CreateVehicle(416, 1180.6284, -1309.0284, 14.0455, 270.0000, 1, 161, 120);
-	CreateVehicle(407, 1179.1649, -1286.0665, 13.5637, 270.0000, 1, 161, 120);
-	CreateVehicle(560, 1211.8083, -1316.1541, 13.0676, 0.0000, 1, 161, 120, 1);
-	CreateVehicle(560, 1211.7893, -1307.9764, 13.0676, 0.0000, 1, 161, 120, 1);
-	CreateVehicle(560, 1211.8102, -1324.3580, 13.0676, 0.0000, 1, 161, 120, 1);
-	CreateVehicle(487, 1180.3014, -1361.0465, 14.3449, 270.0000, 161, 151, 120);
-	//=========================================================================================
-
-	//============================= Piru Mapping/Vehicles ================================
-    CreateVehicle(560, 2509.2024, -1670.7142, 12.9876, 0.0000, 43, 43, 120);
-	CreateVehicle(560, 2505.7954, -1695.2542, 13.0596, 0.0000, 43, 43, 120);
-	CreateVehicle(600, 2473.6863, -1692.5765, 13.2238, 0.0000, 43, 43, 120);
-	CreateVehicle(566, 2450.1355, -1664.6355, 13.0938, 90.0000, 43, 43, 120);
-	CreateVehicle(566, 2484.3250, -1653.3691, 13.0938, 90.0000, 43, 43, 120);
-	CreateVehicle(521, 2513.2896, -1679.7494, 13.0581, 47.0000, 43, 43, 120);
-	CreateVehicle(492, 2501.9158, -1656.2000, 13.1235, 76.0000, 43, 43, 120);
-	CreateVehicle(487, 2530.7190, -1677.6693, 20.2108, 0.0000, 43, 43, 120);
-	//=========================================================================================
-
-	//============================= Strippers Mapping/Vehicles ================================
-    CreateVehicle(541, 2436.2551, -1244.2429, 23.6942, 0.0000, 232, 232, 120);
-	CreateVehicle(541, 2433.1589, -1244.2429, 23.6942, 0.0000, 232, 232, 120);
-	CreateVehicle(541, 2429.9912, -1244.2429, 23.6942, 0.0000, 232, 232, 120);
-	CreateVehicle(521, 2426.6526, -1244.2463, 23.5819, 0.0000, 232, 232, 120);
-	CreateVehicle(521, 2424.8525, -1244.2463, 23.5819, 0.0000, 232, 232, 120);
-	CreateVehicle(521, 2423.3406, -1244.2463, 23.5819, 0.0000, 232, 232, 120);
-	CreateVehicle(471, 2406.2358, -1243.0020, 23.3389, 270.0000, 232, 232, 120);
-	CreateVehicle(471, 2406.2358, -1241.1300, 23.3389, 270.0000, 232, 232, 120);
-	CreateVehicle(560, 2407.3723, -1237.5541, 23.6459, 270.0000, 232, 232, 120);
-	CreateVehicle(560, 2407.3723, -1234.3141, 23.6459, 270.0000, 232, 232, 120);
-	CreateVehicle(487, 2429.3867, -1232.3993, 25.2995, 90.0000, 232, 232, 120);
-	//=========================================================================================
-
-	//============================= Hispanics Mapping/Vehicles ================================
-	CreateVehicle(474, 1877.1576, -2021.1320, 13.1105, 180.0000, 135, 135, 120);
-	CreateVehicle(474, 1877.1576, -2031.3409, 13.1105, 180.0000, 135, 135, 120);
-	CreateVehicle(567, 1877.0907, -2040.6190, 13.2813, 180.0000, 135, 135, 120);
-	CreateVehicle(487, 1867.8578, -2000.7408, 18.9879, 270.0000, 135, 135, 120);
-	CreateVehicle(521, 1892.3164, -2015.4200, 13.0281, 180.0000, 135, 135, 120);
-	CreateVehicle(521, 1892.3164, -2019.4360, 13.0281, 180.0000, 135, 135, 120);
-	CreateVehicle(521, 1892.3164, -2023.7030, 13.0281, 180.0000, 135, 135, 120);
-	CreateVehicle(521, 1892.3164, -2028.4720, 13.0281, 180.0000, 135, 135, 120);
-	CreateVehicle(527, 1888.5768, -2020.2721, 13.1528, 180.0000, 135, 135, 120);
-	CreateVehicle(527, 1888.5768, -2030.5631, 13.1528, 180.0000, 135, 135, 120);
-	CreateVehicle(535, 1888.7665, -2039.6906, 13.0422, 180.0000, 135, 135, 120);
-
-	CreateObject(5130, 1858.70947, -2020.03076, 14.84350,   0.00000, 0.00000, -225.00000);
-	CreateObject(2675, 1868.40820, -2012.94995, 17.94100,   0.00000, 0.00000, 0.00000);
-	CreateObject(2675, 1869.18188, -2019.48547, 17.94100,   0.00000, 0.00000, 0.00000);
-	CreateObject(1448, 1866.95178, -2009.46960, 17.88041,   0.00000, 0.00000, 0.00000);
-	CreateObject(1448, 1866.95178, -2008.48560, 17.88040,   0.00000, 0.00000, 0.00000);
-	CreateObject(1448, 1866.95178, -2007.50159, 17.88040,   0.00000, 0.00000, 0.00000);
-	CreateObject(1448, 1866.95178, -2006.51758, 17.88040,   0.00000, 0.00000, 0.00000);
-	CreateObject(1448, 1866.95178, -2005.53357, 17.88040,   0.00000, 0.00000, 0.00000);
-	CreateObject(1448, 1866.95178, -2004.54956, 17.88040,   0.00000, 0.00000, 0.00000);
-	//=========================================================================================
-
-	//============================= Pizza Boys Mapping/Vehicles ================================
-	CreateVehicle(423, 2122.6035, -1783.0453, 13.3955, 0.0000, 6, 6, 100);
-	CreateVehicle(445, 2122.7026, -1775.5262, 13.1546, 0.0000, 6, 6, 100);
-	CreateVehicle(448, 2121.5710, -1787.4194, 13.0470, 34.0000, 6, 6, 100);
-	CreateVehicle(448, 2121.5710, -1788.9594, 13.0470, 34.0000, 6, 6, 100);
-	CreateVehicle(609, 2104.7795, -1782.8207, 13.3800, 0.0000, 6, 6, 100);
-	CreateVehicle(579, 2104.8015, -1773.7148, 13.2806, -32.1200, 6, 6, 100);
-	//=========================================================================================
-
-}
