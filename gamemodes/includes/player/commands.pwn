@@ -33,10 +33,10 @@
 */
 
 // I-ZCMD PLAYER COMMANDS
-COMMAND:help(playerid)
+CMD:help(playerid)
 {
 	SendClientMessage(playerid, COLOR_WHITE, "==============Old School Deathmatch commands==============");
-	SendClientMessage(playerid, COLOR_WHITE, "INFO: /forum, /admins");
+	SendClientMessage(playerid, COLOR_WHITE, "INFO: /forum, /admins, /rules");
 	SendClientMessage(playerid, COLOR_WHITE, "ACCOUNT: /stats, /password");
 	SendClientMessage(playerid, COLOR_WHITE, "TEAM: /changeteam, /g");
 	SendClientMessage(playerid, COLOR_WHITE, "HELP: /report");
@@ -90,6 +90,17 @@ CMD:stats(playerid, params[])
 	format(string, sizeof(string), "Name: %s | Unique ID: %d | Score: %d | Kills: %i | Deaths: %i | KDR: %.2f | Money: %d | Adminlevel: %d", name, pInfo[playerid][ID], pInfo[playerid][Score], pInfo[playerid][Kills], pInfo[playerid][Deaths], ratio, GetPlayerMoney(playerid), pInfo[playerid][Admin]);
 	SendClientMessage(playerid, -1, string);
 	SendClientMessage(playerid, -1, "To see another player's stats, simply double click their name on your TAB list!");
+	return 1;
+}
+
+CMD:rules(playerid, params[])
+{
+	new rulesDialogStr[1000];
+	strcat(rulesDialogStr, "{00FFEE}1) {FFFFFF}No camping in other team spawns.\n{00FFEE}2) {FFFFFF}No racism or politically based chat.\n", sizeof(rulesDialogStr));
+	strcat(rulesDialogStr, "{00FFEE}3) {FFFFFF}Hacking or use of any advantageous third party modifications.\n{00FFEE}4) {FFFFFF}No bug abusing. If you find a bug, report it on the forums.\n", sizeof(rulesDialogStr));
+	strcat(rulesDialogStr, "{00FFEE}5) {FFFFFF}No abuse of SAMP physics (cbugging, crolling, csliding).\n{00FFEE}6) {FFFFFF}No server advertising of any form.\n", sizeof(rulesDialogStr));
+	strcat(rulesDialogStr, "{00FFEE}7) {FFFFFF}No excessive car ramming. Car parking and heliblading are strictly forbidden.", sizeof(rulesDialogStr));
+	ShowPlayerDialog(playerid, DIALOG_RULES, DIALOG_STYLE_LIST, "Old School Deathmatch Rules", rulesDialogStr, "Okay", "");
 	return 1;
 }
 

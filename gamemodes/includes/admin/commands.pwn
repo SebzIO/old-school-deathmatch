@@ -32,10 +32,29 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <YSI\y_hooks>
+
 #include "./includes/defines.pwn"
 #include "./includes/enums.pwn"
 #include "./includes/variables.pwn"
 #include "./includes/connections.pwn"
+
+new Float:aDutyX, Float:aDutyY, Float:aDutyZ;
+new Text3D:adminText;
+hook OnPlayerConnect(playerid)
+{
+	GetPlayerPos(playerid, aDutyX, aDutyY, aDutyZ);
+	adminText = Create3DTextLabel("On-Duty Admin", COLOR_WATCHDOG, aDutyX, aDutyY, aDutyZ, 40.0, 0); // Aduty 3dText
+}
+
+hook OnPlayerDisconnect(playerid, reason)
+{
+
+	DeletePlayer3DTextLabel(playerid, PlayerText3D:adminText);
+	aDuty[playerid] = 0;
+	DestroyDynamic3DTextLabel(Text3D:adminText);
+	return 1;
+}
 
 // IZCMD ADMIN COMMANDS
 
@@ -289,9 +308,6 @@ CMD:aduty(playerid)
 {
 	if(pInfo[playerid][Admin] >=1 || IsPlayerAdmin(playerid))
 	{
-		new Float:X, Float:Y, Float:Z;
-		GetPlayerPos(playerid, X, Y, Z);
-		new Text3D:adminText = Create3DTextLabel("On-Duty Admin", COLOR_WATCHDOG, X, Y, Z, 40.0, 0);
 		if (aDuty[playerid] == 0)
 		{
 			new string[128];
@@ -321,7 +337,7 @@ CMD:aduty(playerid)
 			SendClientMessageToAll(COLOR_WATCHDOG, string);
 			SendClientMessage(playerid, COLOR_WATCHDOG, "You are now off duty!");
 			aDuty[playerid] = 0;
-			Delete3DTextLabel(adminText);
+			DeletePlayer3DTextLabel(playerid, PlayerText3D:adminText);
 		}
  	}
 	else
@@ -487,13 +503,13 @@ CMD:spec(playerid, params[])
 	{
 	    if(GetPlayerInterior(id) > 0)
 	    {
-			SetPlayerInterior(playerid,GetPlayerInterior(id));
+			SetPlayerInterior(playerid, GetPlayerInterior(id));
 		}
 		if(GetPlayerVirtualWorld(id) > 0)
 		{
-		    SetPlayerVirtualWorld(playerid,GetPlayerVirtualWorld(id));
+		    SetPlayerVirtualWorld(playerid, GetPlayerVirtualWorld(id));
 		}
-	    PlayerSpectateVehicle(playerid,GetPlayerVehicleID(id));
+	    PlayerSpectateVehicle(playerid, GetPlayerVehicleID(id));
 	}
 	else
 	{
@@ -584,31 +600,5 @@ CMD:a(playerid, params[])
 		SendToAdmins(0xF2FF00FF, string);
 	}
 	else return UnAuthMessage(playerid);
-	return 1;
-}
-
-CMD:tempveh(playerid, params[])
-{
-	if(pInfo[playerid][Admin] >= 6)
-	{
-		new Float:x, Float:y, Float:z, Float:facing;
-		GetPlayerPos(playerid, x, y, z);
-		GetPlayerFacingAngle(playerid, facing);
-		new vehicleID;
-		if (sscanf(params, "i", vehicleID))
-		{
-		    return SendClientMessage(playerid, 0xFF0000AA, "Usage: /tempveh <vehicleid>");
-		}
-		else if(vehicleID < 400 || vehicleID >611) return SendClientMessage(playerid, 0xff0000ff, "ERROR: Cannot go under 400 or above 611.");
-		new tempVehicle = CreateVehicle(vehicleID, x + 5, y + 5, z, facing, 3, 3, 60);
-		PutPlayerInVehicle(playerid, vehicleID, 0);
-	}
-	else return UnAuthMessage(playerid);
-	return 1;
-}
-
-hook OnPlayerStateChange(playerid, newstate, oldstate)
-{
-	if()
 	return 1;
 }

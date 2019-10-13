@@ -58,7 +58,7 @@
 #define SERVER_NAME "Old-School Deathmatch | 0.3 DL"
 #define MAJOR_VERSION 1
 #define MINOR_VERSION 0
-#define UPDATE 1
+#define UPDATE 5
 
 //================= DIALOGS ===========================
  
@@ -68,7 +68,8 @@
 #define DIALOG_STATS           (3) 
 #define DIALOG_RADIO           (4) 
 #define DIALOG_RADIO_RAP       (5)
-#define DIALOG_RADIO_ROCK      (6)     
+#define DIALOG_RADIO_ROCK      (6)
+#define DIALOG_RULES           (7)
 
 //=====================================================
 
