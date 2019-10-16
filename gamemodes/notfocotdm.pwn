@@ -45,11 +45,6 @@
 #include <SKY.inc>
 #include <weapon-config>
 
-#include "./includes/admin/anticheat.pwn"
-#include "./includes/admin/commands.pwn"
-
-#include "./includes/player/commands.pwn"
-
 #include "./includes/connections.pwn"
 #include "./includes/defines.pwn"
 #include "./includes/discord.pwn"
@@ -57,6 +52,13 @@
 #include "./includes/functions.pwn"
 #include "./includes/mapping.pwn"
 #include "./includes/variables.pwn"
+ 
+#include "./includes/admin/anticheat.pwn"
+#include "./includes/admin/commands.pwn"
+
+#include "./includes/player/classes.pwn"
+#include "./includes/player/commands.pwn"
+
 
 #undef MAX_PLAYERS
 #define MAX_PLAYERS 100
@@ -81,21 +83,6 @@ public OnGameModeInit()
 
 	// Random messages
 	SetTimer("SendMSG", 600000, true);
-
-	// MYSQL INIT
-	new MySQLOpt: option_id = mysql_init_options();
-	mysql_set_option(option_id, AUTO_RECONNECT, true);
-
-	Database = mysql_connect(SQL_HOSTNAME, SQL_USERNAME, SQL_PASSWORD, SQL_DATABASE, option_id);
-	printf("ATTEMPTING MYSQL CONNNECTION...");
-	printf(" "); // Blank line for spacing
-
-	if(mysql_errno() != 0){ // Connection failed.
-		printf ("DATABASE CONNECTION FAILED TO SERVER @ SQL_HOSTNAME");
-		SendRconCommand("exit");
-	} else { // Connection successfully made.
-		printf ("DATABASE CONNECTION SUCCESSFUL TO SERVER @ SQL_HOSTNAME");
-	}
 
 	// Player table creation (if it does not exist).
 	mysql_tquery(Database, "CREATE TABLE IF NOT EXISTS `PLAYERS` (`ID` int(11) NOT NULL AUTO_INCREMENT,`USERNAME` varchar(24) NOT NULL,`PASSWORD` char(65) NOT NULL,`SALT` char(11) NOT NULL,`IP` varchar(45) NOT NULL,`SCORE` mediumint(7), `KILLS` mediumint(7), `CASH` mediumint(7) NOT NULL DEFAULT '0',`DEATHS` mediumint(7) NOT NULL DEFAULT '0',`ADMIN` mediumint(7) NOT NULL DEFAULT '0', PRIMARY KEY (`ID`), UNIQUE KEY `USERNAME` (`USERNAME`))");
@@ -408,11 +395,24 @@ public OnPlayerDeath(playerid, killerid, reason)
 
 public OnPlayerDamage(&playerid, &Float:amount, &issuerid, &weapon, &bodypart)
 {
+	// Disable helikill and carpark
+    if(weapon == WEAPON_CARPARK || weapon == WEAPON_HELIBLADES)
+    {
+        return 0;
+    }
+
+    // Ignore low fall damage
+    if(weapon == WEAPON_COLLISION && amount < 10.0)
+    {
+        return 0;
+    }
+
 	if(aDuty[playerid] == 1)
 	{
 		SetPlayerHealth(playerid, 10000);
 		GameTextForPlayer(issuerid, "Do not shoot at on duty admins.", 5000, 3);
 	}
+
 	PlayerPlaySound(issuerid, 17802, 0.0, 0.0, 0.0); // Hitmarker ding sound.
 	return 1;
 }

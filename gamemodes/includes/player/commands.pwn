@@ -162,6 +162,7 @@ CMD:changeteam(playerid, params[])
     ForceClassSelection(playerid);
     TogglePlayerSpectating(playerid, true);
     TogglePlayerSpectating(playerid, false);
+    SetPlayerHealth(playerid, 100);
     return 1;
 }
 

@@ -43,7 +43,7 @@
 #define COLOR_MAJOR_WARNING 0xFF0000FF
 
 #define COLOR_POLICE 0x50A8D8FF
-#define COLOR_MAFIA 0x008080FF
+#define COLOR_MAFIA 0x778899FF
 #define COLOR_MEDICS 0xFF8080FF
 #define COLOR_PIRU 0xFF0000FF
 #define COLOR_STRIPPERS 0xFF00FFFF
@@ -66,11 +66,15 @@
 #define DIALOG_REGISTER        (0)
 #define DIALOG_LOGIN           (1)
 #define DIALOG_BANNED          (2)
-#define DIALOG_STATS           (3) 
-#define DIALOG_RADIO           (4) 
+#define DIALOG_STATS           (3)
 #define DIALOG_RADIO_RAP       (5)
+#define DIALOG_RADIO           (4)
 #define DIALOG_RADIO_ROCK      (6)
 #define DIALOG_RULES           (7)
+#define DIALOG_CLASS_MENU      (8)
+#define DIALOG_CLASS_SELECT    (9)
+#define DIALOG_CLASS_EDIT      (10)
+#define DIALOG_CLASS_EDITING   (11)
 
 //=====================================================
 

@@ -106,6 +106,61 @@ GetPlayerAdutyStatus(playerid)
     return aDutyStatus;
 }
 
+WeaponIDToName(weaponID)
+{
+    new weaponName[30];
+
+    switch(weaponID)
+    {
+        case 0: {weaponName = "Fist";}
+        case 1: {weaponName = "Brass Knuckles";}
+        case 2: {weaponName = "Golf Club";}
+        case 3: {weaponName = "Nightstick";}
+        case 4: {weaponName = "Knife";}
+        case 5: {weaponName = "Baseball Bat";}
+        case 6: {weaponName = "Shovel";}
+        case 7: {weaponName = "Pool Cue";}
+        case 8: {weaponName = "Katana";}
+        case 9: {weaponName = "Chainsaw";}
+        case 10: {weaponName = "Purple Dildo";}
+        case 11: {weaponName = "Dildo";}
+        case 12: {weaponName = "Vibrator";}
+        case 13: {weaponName = "Silver Vibrator";}
+        case 14: {weaponName = "Flowers";}
+        case 15: {weaponName = "Cane";}
+        case 16: {weaponName = "Grenade";}
+        case 17: {weaponName = "Tear Gas";}
+        case 18: {weaponName = "Molotov Cocktail";}
+        case 22: {weaponName = "Colt 45";}
+        case 23: {weaponName = "Silenced Pistol";}
+        case 24: {weaponName = "Desert Eagle";}
+        case 25: {weaponName = "Shotgun";}
+        case 26: {weaponName = "Sawnoff Shotgun";}
+        case 27: {weaponName = "Combat Shotgun";}
+        case 28: {weaponName = "Micro Uzi";}
+        case 29: {weaponName = "MP5";}
+        case 30: {weaponName = "AK-47";}
+        case 31: {weaponName = "M4";}
+        case 32: {weaponName = "Tec-9";}
+        case 33: {weaponName = "Country Rifle";}
+        case 34: {weaponName = "Sniper Rifle";}
+        case 35: {weaponName = "RPG";}
+        case 36: {weaponName = "HS Rocket";}
+        case 37: {weaponName = "Flamethrower";}
+        case 38: {weaponName = "Minigun";}
+        case 39: {weaponName = "Satchel Charge";}
+        case 40: {weaponName = "Detonator";}
+        case 41: {weaponName = "Spraycan";}
+        case 42: {weaponName = "Fire Extinguisher";}
+        case 43: {weaponName = "Camera";}
+        case 44: {weaponName = "Night Vision Goggles";}
+        case 45: {weaponName = "Thermal Goggles";}
+        case 46: {weaponName = "Parachute";}
+    }
+
+    return weaponName;
+}
+
 GetTeamColor(playerid)
 {
     new color;

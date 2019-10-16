@@ -42,3 +42,21 @@ new
 #define SQL_PASSWORD "36YUw5Qz3stl"
 
 //=====================================================
+
+hook OnGameModeInit()
+{
+	// MYSQL INIT
+	new MySQLOpt: option_id = mysql_init_options();
+	mysql_set_option(option_id, AUTO_RECONNECT, true);
+
+	Database = mysql_connect(SQL_HOSTNAME, SQL_USERNAME, SQL_PASSWORD, SQL_DATABASE, option_id);
+	printf("ATTEMPTING MYSQL CONNNECTION...");
+	printf(" "); // Blank line for spacing
+
+	if(mysql_errno() != 0){ // Connection failed.
+		printf ("DATABASE CONNECTION FAILED TO SERVER @ SQL_HOSTNAME");
+		SendRconCommand("exit");
+	} else { // Connection successfully made.
+		printf ("DATABASE CONNECTION SUCCESSFUL TO SERVER @ SQL_HOSTNAME");
+	}
+}

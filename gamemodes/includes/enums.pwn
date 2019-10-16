@@ -59,3 +59,18 @@ enum ENUM_PLAYER_DATA
 }
 
 new pInfo[MAX_PLAYERS][ENUM_PLAYER_DATA]; // Player Data enumerator.
+
+//=========== PLAYER CLASS ENUMERATOR ==================
+
+enum E_PlayerClass
+{
+    E_MELEE,
+    E_THROWN,
+    E_HANDGUN,
+    E_SHOTGUN,
+    E_SUBMACHINE,
+    E_ASSAULT,
+    E_LONGRIFLE
+}
+
+new classData[MAX_PLAYERS][E_PlayerClass];

@@ -87,7 +87,7 @@ CMD:kick(playerid, params[])
 
         if(!IsPlayerConnected(PID)) return SendClientMessage(playerid, -1, "The player you have specified is not connected.");
 
-        format(str, sizeof(str), "AdmCmd(1): '%s' has been kicked by administrator '%s'. Reason: %e ", playerName, adminName, reason);
+        format(str, sizeof(str), "AdmCmd(1): '%s' has been kicked by administrator '%s'. Reason: %s ", playerName, adminName, reason);
 		KickDelay(PID, str);
 
 	}
@@ -159,7 +159,7 @@ CMD:ban(playerid, params[])
 		new DB_Query[1000];
 		// Saving ban to BANS table.
 		mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `BANS` (`USERNAME`, `ADMIN`, `IP`, `ACTIVE`, `REASON`, `DATE`)\
-		VALUES ('%e', '%e', '%s', TRUE, '%s', '%e')", pInfo[PID][Name], adminName, pInfo[PID][IP], reason, ReturnDate());
+		VALUES ('%e', '%e', '%s', TRUE, '%e', '%e')", pInfo[PID][Name], adminName, pInfo[PID][IP], reason, ReturnDate());
 	 	mysql_tquery(Database, DB_Query);
 	}
     else
