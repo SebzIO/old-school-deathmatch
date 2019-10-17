@@ -56,6 +56,7 @@
 #include "./includes/admin/anticheat.pwn"
 #include "./includes/admin/commands.pwn"
 
+#include "./includes/player/satchels.pwn"
 #include "./includes/player/classes.pwn"
 #include "./includes/player/commands.pwn"
 

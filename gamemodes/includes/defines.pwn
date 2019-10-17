@@ -75,6 +75,13 @@
 #define DIALOG_CLASS_SELECT    (9)
 #define DIALOG_CLASS_EDIT      (10)
 #define DIALOG_CLASS_EDITING   (11)
+#define DIALOG_CLASS_MELEE     (12)
+#define DIALOG_CLASS_THROWN    (13)
+#define DIALOG_CLASS_HANDGUN   (14)
+#define DIALOG_CLASS_SHOTGUN   (15)
+#define DIALOG_CLASS_SMG       (16)
+#define DIALOG_CLASS_ASSAULT   (16)
+#define DIALOG_CLASS_RIFLE     (16)
 
 //=====================================================
 

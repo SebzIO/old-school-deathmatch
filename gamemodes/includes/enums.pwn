@@ -74,3 +74,16 @@ enum E_PlayerClass
 }
 
 new classData[MAX_PLAYERS][E_PlayerClass];
+
+enum E_PlayerClassEdit
+{
+    E_MELEE,
+    E_THROWN,
+    E_HANDGUN,
+    E_SHOTGUN,
+    E_SUBMACHINE,
+    E_ASSAULT,
+    E_LONGRIFLE
+}
+
+new editClassData[5][MAX_PLAYERS][E_PlayerClassEdit];

@@ -156,6 +156,7 @@ WeaponIDToName(weaponID)
         case 44: {weaponName = "Night Vision Goggles";}
         case 45: {weaponName = "Thermal Goggles";}
         case 46: {weaponName = "Parachute";}
+        default: {weaponName = "EMPTY";}
     }
 
     return weaponName;
