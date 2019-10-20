@@ -739,10 +739,39 @@ public OnDialogResponse(playerid, dialogid, response, listitem, inputtext[])
 				GetPlayerIp(playerid, plrIP, sizeof(plrIP));
 				pInfo[playerid][IP] = plrIP;
 
+				new registered_players, Cache:result = mysql_query(Database, "SELECT COUNT(*) FROM `PLAYERS`");
+				cache_get_value_int(0, 0, registered_players);
+				cache_delete(result);
+
 		    	// Storing player's information if everything goes right.
 		    	mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `PLAYERS` (`IP`,`USERNAME`, `PASSWORD`, `SALT`, `SCORE`, `KILLS`, `CASH`, `DEATHS`, `ADMIN`)\
 		    	VALUES ('%s', '%e', '%s', '%e', '0', '0', '0', '0', '0')", plrIP, pInfo[playerid][Name], pInfo[playerid][Password], pInfo[playerid][Salt]);
 		     	mysql_tquery(Database, DB_Query, "OnPlayerRegister", "d", playerid);
+
+		     	// Empty class 1
+		     	mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `CLASSES` (`ID`,`USERNAME`, `CLASSID`, `MELEE`, `THROWN`, `HANDGUN`, `SHOTGUN`, `SUBMACHINE`, `ASSAULT`, `LONGRIFLE`)\
+		    	VALUES ('%i', '%e', '0', '-1', '-1', '-1', '-1', '-1', '-1', '-1')", registered_players + 1, pInfo[playerid][Name]);
+		    	mysql_tquery(Database, DB_Query);
+
+		    	// Empty class 2
+		    	mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `CLASSES` (`ID`,`USERNAME`, `CLASSID`, `MELEE`, `THROWN`, `HANDGUN`, `SHOTGUN`, `SUBMACHINE`, `ASSAULT`, `LONGRIFLE`)\
+		    	VALUES ('%i', '%e', '1', '-1', '-1', '-1', '-1', '-1', '-1', '-1')", registered_players + 1, pInfo[playerid][Name]);
+		    	mysql_tquery(Database, DB_Query);
+
+		    	// Empty class 3
+		    	mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `CLASSES` (`ID`,`USERNAME`, `CLASSID`, `MELEE`, `THROWN`, `HANDGUN`, `SHOTGUN`, `SUBMACHINE`, `ASSAULT`, `LONGRIFLE`)\
+		    	VALUES ('%i', '%e', '2', '-1', '-1', '-1', '-1', '-1', '-1', '-1')", registered_players + 1, pInfo[playerid][Name]);
+		    	mysql_tquery(Database, DB_Query);
+
+		    	// Empty class 4
+		    	mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `CLASSES` (`ID`,`USERNAME`, `CLASSID`, `MELEE`, `THROWN`, `HANDGUN`, `SHOTGUN`, `SUBMACHINE`, `ASSAULT`, `LONGRIFLE`)\
+		    	VALUES ('%i', '%e', '3', '-1', '-1', '-1', '-1', '-1', '-1', '-1')", registered_players + 1, pInfo[playerid][Name]);
+		    	mysql_tquery(Database, DB_Query);
+
+		    	// Empty class 5
+		    	mysql_format(Database, DB_Query, sizeof(DB_Query), "INSERT INTO `CLASSES` (`ID`,`USERNAME`, `CLASSID`, `MELEE`, `THROWN`, `HANDGUN`, `SHOTGUN`, `SUBMACHINE`, `ASSAULT`, `LONGRIFLE`)\
+		    	VALUES ('%i', '%e', '4', '-1', '-1', '-1', '-1', '-1', '-1', '-1')", registered_players + 1, pInfo[playerid][Name]);
+		    	mysql_tquery(Database, DB_Query);
 		     	
 		     }
 		}

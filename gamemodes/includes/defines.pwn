@@ -80,8 +80,8 @@
 #define DIALOG_CLASS_HANDGUN   (14)
 #define DIALOG_CLASS_SHOTGUN   (15)
 #define DIALOG_CLASS_SMG       (16)
-#define DIALOG_CLASS_ASSAULT   (16)
-#define DIALOG_CLASS_RIFLE     (16)
+#define DIALOG_CLASS_ASSAULT   (17)
+#define DIALOG_CLASS_RIFLE     (18)
 
 //=====================================================
 
