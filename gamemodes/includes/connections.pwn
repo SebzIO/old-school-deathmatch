@@ -36,10 +36,10 @@
 new
     MySQL: Database, Corrupt_Check[MAX_PLAYERS];
 
-#define SQL_HOSTNAME "localhost"
-#define SQL_USERNAME "pmauser"
-#define SQL_DATABASE "queerdm"
-#define SQL_PASSWORD "36YUw5Qz3stl"
+#define SQL_HOSTNAME "DB_HOSTNAME_HERE"
+#define SQL_USERNAME "DB_USER_HERE"
+#define SQL_DATABASE "DB_NAME_HERE"
+#define SQL_PASSWORD "DB_PASS_HERE"
 
 //=====================================================
 
